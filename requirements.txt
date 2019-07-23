@@ -1,1 +1,3 @@
 flask
+googlemaps
+python-dotenv
