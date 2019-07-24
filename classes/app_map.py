@@ -15,6 +15,6 @@ class AppMap():
     
     def __init__(self, zoom, center):
         """This special method is the class constructor."""
-        # super(AppMap, self).__init__()
+        super(AppMap, self).__init__()
         self.zoom = zoom # type is int
         self.center = center # type is <class 'Point'>

@@ -11,6 +11,6 @@ class Point():
     
     def __init__(self, lat, lng):
         """This special method is the class constructor."""
-        # super(Point, self).__init__()
+        super(Point, self).__init__()
         self.lat = lat # type is float
         self.lng = lng # type is float

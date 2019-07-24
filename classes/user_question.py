@@ -9,7 +9,7 @@ class UserQuestion():
     
     def __init__(self, entered_question):
         """This special method is the class constructor."""
-        # super(UserQuestion, self).__init__()
+        super(UserQuestion, self).__init__()
         self.entered_question = entered_question # type is str
 
     def get_splitted(self):

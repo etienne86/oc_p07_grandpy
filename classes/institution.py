@@ -14,7 +14,7 @@ class Institution():
     
     def __init__(self, entered_name):
         """This special method is the class constructor."""
-        # super(Institution, self).__init__()
+        super(Institution, self).__init__()
         self.entered_name = entered_name # type is str
 
     def get_formatted_address(self):
