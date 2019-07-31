@@ -1,3 +1,6 @@
+coverage
 flask
 googlemaps
+pytest
+pytest-cov
 python-dotenv
