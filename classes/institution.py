@@ -1,9 +1,15 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-"""This module contains the 'Institution' class."""
+"""This module mainly contains the 'Institution' class."""
 
 import googlemaps
+
+from oc_p07_grandpy.various.config import Config
+
+
+class NoResponseError(Exception):
+    pass
 
 
 class Institution():
@@ -22,15 +28,36 @@ class Institution():
         This method is responsible for getting the
         formatted address from the googlemaps module.
         """
-        # result = ""
-        return result
+        try:
+            return self.get_geocode_response()['formatted_address']
+        except NoResponseError:
+            return 'not understood so not found'
+
+    def get_geocode_response(self):
+        """
+        This method is responsible for getting the
+        geocode response from the googlemaps module.
+        This method returns a dict, or raise an exception.
+        """
+        gmaps = googlemaps.Client(key=Config.GOOGLE_MAPS_API_KEY)
+        geocode_result = gmaps.geocode(self.entered_name)
+        if geocode_result:
+            return geocode_result[0] # returns the first element of the list
+        else:
+            raise NoResponseError
+
+    def get_wiki_response(self):
+        """
+        This method is responsible for getting the
+        response from the wikipedia API.
+        """
 
     def get_latitude(self):
         """
         This method is responsible for getting the
         latitude from the googlemaps module.
         """
-        # result = 0.0
+        result = 0.0
         return result
 
     def get_longitude(self):
@@ -38,7 +65,7 @@ class Institution():
         This method is responsible for getting the
         longitude from the googlemaps module.
         """
-        # result = 0.0
+        result = 0.0
         return result
 
     def get_standard_name(self):
@@ -46,7 +73,7 @@ class Institution():
         This method is responsible for getting the standard name,
         based on the name entered by the user.
         """
-        # result = ""
+        result = ""
         return result
    
     def get_wiki_summary(self):
@@ -54,5 +81,5 @@ class Institution():
         This method is responsible for extracting a few sentences
         from the wikipedia page dedicated to the institution.
         """
-        # result = ""
+        result = ""
         return result        
