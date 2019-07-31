@@ -46,27 +46,25 @@ class Institution():
         else:
             raise NoResponseError
 
-    def get_wiki_response(self):
-        """
-        This method is responsible for getting the
-        response from the wikipedia API.
-        """
-
     def get_latitude(self):
         """
         This method is responsible for getting the
         latitude from the googlemaps module.
         """
-        result = 0.0
-        return result
+        try:
+            return self.get_geocode_response()['geometry']['location']['lat']
+        except NoResponseError:
+            return 'not understood so not found'
 
     def get_longitude(self):
         """
         This method is responsible for getting the
         longitude from the googlemaps module.
         """
-        result = 0.0
-        return result
+        try:
+            return self.get_geocode_response()['geometry']['location']['lng']
+        except NoResponseError:
+            return 'not understood so not found'
 
     def get_standard_name(self):
         """
@@ -75,6 +73,12 @@ class Institution():
         """
         result = ""
         return result
+
+    def get_wiki_response(self):
+        """
+        This method is responsible for getting the
+        response from the wikipedia API.
+        """
    
     def get_wiki_summary(self):
         """

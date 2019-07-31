@@ -12,19 +12,40 @@ import oc_p07_grandpy.classes.institution as institution
 from institution import Institution
 
 
-# def setup_function():
-#     gmaps = googlemaps.Client(key=institution.Config.GOOGLE_MAPS_API_KEY)
-    
+# class TestInstitution():
 
-def test_get_formatted_address(monkeypatch):
-    
+mock_func = Mock()
+
+def setup_function():
     # a function which mocks the googlemaps 'geocode' return
-    mock_func = Mock()
-    mock_func.return_value = {"formatted_address": "mock_value"}
-
+    mock_func.return_value = {
+        "formatted_address": "mock_address",
+        "geometry": {
+            "location": {
+                "lat": "mock_latitude",
+                "lng": "mock_longitude"
+            }
+        }
+    }
+    
+def test_get_formatted_address(monkeypatch):
+    # the mocking process with the 'monkeypatch' fixture
     monkeypatch.setattr(Institution, 'get_geocode_response', mock_func)
     new_inst = Institution("")
     value = new_inst.get_formatted_address()
-    assert value == "mock_value"
+    assert value == "mock_address"
 
 
+def test_get_latitude(monkeypatch):
+    # the mocking process with the 'monkeypatch' fixture
+    monkeypatch.setattr(Institution, 'get_geocode_response', mock_func)
+    new_inst = Institution("")
+    value = new_inst.get_latitude()
+    assert value == "mock_latitude"
+
+def test_get_longitude(monkeypatch):
+    # the mocking process with the 'monkeypatch' fixture
+    monkeypatch.setattr(Institution, 'get_geocode_response', mock_func)
+    new_inst = Institution("")
+    value = new_inst.get_longitude()
+    assert value == "mock_longitude"
