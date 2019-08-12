@@ -4,3 +4,4 @@ googlemaps
 pytest
 pytest-cov
 python-dotenv
+requests
