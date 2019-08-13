@@ -30,7 +30,10 @@ class UserQuestion():
         ## TO DO:
         result = ""
         ## split sentence into words
-        ## ignore stop words
+        # remove punctuation
+        # remove redundant spaces
+        # transform to lowercase
+        ## exclude stop words
         ## algo
         ## result = " ".join(key_words)
         return result
