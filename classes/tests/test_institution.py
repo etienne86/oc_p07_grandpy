@@ -44,7 +44,7 @@ def setup_function():
 def init_for_geocode_tests(monkeypatch):
     """
     This function is used in several tests
-    related to the googlemaps 'geoccode' return.
+    related to the googlemaps 'geocode' return.
     """
     # the mocking process with the 'monkeypatch' fixture
     monkeypatch.setattr(Institution, 'get_geocode_response', mock_func)
@@ -73,9 +73,8 @@ def test_get_place_id(monkeypatch):
     value = init_for_geocode_tests(monkeypatch).get_place_id()
     assert value == "mock_place_id"
 
-def test_get_wiki_summary():
-    new_inst = Institution("")
-    full_text = new_inst.get_wiki_text()
+# nota: get_wiki_summary() is not tested directly,
+# as it uses methods and functions already tested
 
 def test_get_wiki_text(monkeypatch):
     monkeypatch.setattr(Institution, 'get_wiki_response', mock_func)
