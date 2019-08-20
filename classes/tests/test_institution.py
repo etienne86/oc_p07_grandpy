@@ -89,15 +89,23 @@ def test_ignore_http_tags():
     assert ignore_http_tags(string) == simple_string
 
 def test_shorten_text_with_short_string():
+    """The string is short enough, so this stays as it is."""
     string = "12345678. " * 50 + "123"
     assert shorten_text(string) == string
 
 def test_shorten_text_with_long_string():
+    """
+    The string is long, and this will be shortened at the end of a sentence.
+    """
     string = "12345678. " * 110 + "123"
     shortened_string = "12345678. " * 99 + "12345678."
     assert shorten_text(string) == shortened_string
 
 def test_shorten_text_without_any_dot():
+    """
+    The string is long, and this will be shortened
+    before the end of a sentence.
+    """
     string = "123456789 " * 110 + "123"
     shortened_string = "123456789 " * 98 + "123456789" + "..." 
     assert shorten_text(string) == shortened_string

@@ -8,7 +8,7 @@ import re
 import googlemaps
 import requests
 
-from various.config import Config
+from oc_p07_grandpy.various.config import Config
 
 
 class NoResponseError(Exception):
@@ -48,8 +48,8 @@ class Institution():
         """
         gmaps = googlemaps.Client(key=Config.GOOGLE_MAPS_API_KEY)
         geocode_result = gmaps.geocode(self.entered_name)
-        if geocode_result:
-            return geocode_result[0] # returns the first element of the list
+        if len(geocode_result) == 1:
+            return geocode_result[0] # returns the only element of the list
         else:
             raise NoResponseError
 
@@ -144,7 +144,7 @@ class Institution():
         """
         # identify the correct section, which is after the following flag
         flag = "class=\"mw-headline\""
-        splitted_text = self.get_wiki_text(flag)
+        splitted_text = self.get_wiki_text().split(flag)
         # some sections are exceptions to be ignored
         exceptions = [
             "(.*)<div class=\"geobox\"(.*)", 
