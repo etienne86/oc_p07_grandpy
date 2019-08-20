@@ -3,9 +3,9 @@
 
 """This module contains the 'AppMarker' class."""
 
-from app_map import AppMap
-from institution import Institution
-from point import Point
+from oc_p07_grandpy.classes.app_map import AppMap
+from oc_p07_grandpy.classes.institution import Institution
+from oc_p07_grandpy.classes.point import Point
 
 
 class AppMarker():

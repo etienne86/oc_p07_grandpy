@@ -5,7 +5,7 @@
 
 import googlemaps
 
-from point import Point
+from oc_p07_grandpy.classes.point import Point
 
 
 class AppMap():
