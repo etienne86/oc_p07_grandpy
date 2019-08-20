@@ -1,6 +1,7 @@
 coverage
 flask
 googlemaps
+pylint
 pytest
 pytest-cov
 python-dotenv
