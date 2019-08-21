@@ -6,7 +6,6 @@
 from unittest.mock import Mock
 
 import pytest
-import googlemaps
 
 from oc_p07_grandpy.classes.institution import Institution
 from oc_p07_grandpy.classes.institution import ignore_http_tags, shorten_text
