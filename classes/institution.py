@@ -8,7 +8,7 @@ import re
 import googlemaps
 import requests
 
-from oc_p07_grandpy.various.config import Config
+from various.config import Config
 
 
 class NoResponseError(Exception):
@@ -36,7 +36,10 @@ class Institution():
         This method returns a 'str' value.
         """
         try:
-            return self.get_geocode_response()['formatted_address']
+            address = self.get_geocode_response()[0]['formatted_address']
+            return address
+        except KeyError:
+            return 'key error'
         except NoResponseError:
             return 'not understood so not found'
 
@@ -44,13 +47,13 @@ class Institution():
         """
         This method is responsible for getting the
         geocode response from the googlemaps module.
-        This method returns a 'dict' value, or raise an exception.
+        This method returns a 'list' value, or raise an exception.
         """
         gmaps = googlemaps.Client(key=Config.GOOGLE_MAPS_API_KEY)
         geocode_result = gmaps.geocode(self.entered_name)
-        if len(geocode_result) == 1:
-            return geocode_result[0] # returns the only element of the list
-        else:
+        try:
+            return geocode_result # returns a list with one or more elements
+        except googlemaps.exceptions.HTTPError:
             raise NoResponseError
 
     def get_latitude(self):
@@ -60,7 +63,8 @@ class Institution():
         This method returns a 'float' value.
         """
         try:
-            return self.get_geocode_response()['geometry']['location']['lat']
+            lat = self.get_geocode_response()[0]['geometry']['location']['lat']
+            return lat
         except NoResponseError:
             return 'not understood so not found'
 
@@ -71,7 +75,8 @@ class Institution():
         This method returns a 'float' value.
         """
         try:
-            return self.get_geocode_response()['geometry']['location']['lng']
+            lng = self.get_geocode_response()[0]['geometry']['location']['lng']
+            return lng
         except NoResponseError:
             return 'not understood so not found'
 
@@ -93,7 +98,7 @@ class Institution():
         This method returns a 'str' value.
         """
         try:
-            return self.get_geocode_response()['place_id']
+            return self.get_geocode_response()[0]['place_id']
         except NoResponseError:
             return 'not understood so not found'
 
@@ -123,11 +128,13 @@ class Institution():
         response from the wikipedia API.
         This method returns a 'dict' value, or raise an exception.
         """
+        # arrange the name for the wikipedia API
+        wiki_name = "_".join(self.get_name().split())
         # execute the HTTP request
         wiki_response_http = requests.get(
             "https://fr.wikipedia.org/w/api.php?"\
                 + "action=parse&prop=text&format=json"\
-                + "&page=" + self.get_name()
+                + "&page=" + wiki_name
         )
         wiki_response_dict = wiki_response_http.json() # type is dict
         # analyze and treat the HTTP response
@@ -170,7 +177,8 @@ class Institution():
             else:
                 n += 1
         if not returned:
-            raise NotFoundError
+            # raise NotFoundError
+            return ""
 
     def get_wiki_text(self):
         """
@@ -178,6 +186,7 @@ class Institution():
         from the wikipedia page dedicated to the institution.
         This method returns a 'str' value.
         """
+        # print(str(self.get_wiki_response())[0:300])
         try:
             return self.get_wiki_response()['parse']['text']['*']
         except NoResponseError:

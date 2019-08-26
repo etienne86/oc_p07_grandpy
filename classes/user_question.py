@@ -5,9 +5,11 @@
 
 import re
 
+import googlemaps
+
 # from oc_p07_grandpy.classes.bot_reply import BotReply
-from oc_p07_grandpy.classes.institution import Institution, NoResponseError
-import oc_p07_grandpy.classes.stop_words as stop_words
+from classes.institution import Institution, NoResponseError
+import classes.stop_words as stop_words
 
 
 class UserQuestion():
@@ -24,18 +26,35 @@ class UserQuestion():
         and calls other methods.
         This returns a dict to feed the bot reply.
         """
-        # is is a question to request an address?
+        result = {
+            'acceptable_question': False,
+            'question': ""
+        }
+        # is this a question to request an address?
         if not self.ask_for_location:
             bot.ask_for_understanding()
             self.analyze(bot)
+        # parse the user question
+        result['question'] = self.parse()
         # is the question complete enough?
         if not self.ask_complete_question():
             bot.ask_for_completion()
             self.analyze(bot)
+        # googlemaps request
+        inst = Institution(self.parse())
+        try:
+            inst.get_geocode_response()[0]['formatted_address']
+        except NoResponseError:
+            print('not found but captured')
+        except googlemaps.exceptions.HTTPError:
+            print('not found googlemaps error')
         # is the question precise enough?
         if not self.ask_precise_question():
             bot.ask_for_precision()
             self.analyze(bot)
+        # the question is acceptable
+        result['acceptable_question'] = True
+        return result
 
     def ask_complete_question(self):
         """

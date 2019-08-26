@@ -7,8 +7,8 @@ from unittest.mock import Mock
 
 import pytest
 
-from oc_p07_grandpy.classes.institution import Institution
-from oc_p07_grandpy.classes.institution import ignore_http_tags, shorten_text
+from classes.institution import Institution
+from classes.institution import ignore_http_tags, shorten_text
 
 
 # initialization of a function which mocks:
@@ -16,29 +16,26 @@ from oc_p07_grandpy.classes.institution import ignore_http_tags, shorten_text
 #   _ 'geocode' return for address, latitude, longitude and place_id
 #   _ 'place' return for real name
 # - the wikipedia return to get the page text
-mock_func = Mock()
+mock_func_gm = Mock()
 
 def setup_function():
-    # the mock function returns a dict
-    # (with the same keys as in the 'geocode' and 'place' returns)
-    mock_func.return_value = {
-        "formatted_address": "mock_address",
-        "geometry": {
-            "location": {
-                "lat": "mock_latitude",
-                "lng": "mock_longitude"
-            }
-        },
-        "place_id": "mock_place_id",
-        "result": {
-            "name" : "mock_name"
-        },
-        "parse": {
-            "text": {
-                "*": "mock_wiki_text"
+    # the mock function returns a list containing a dict,
+    # with the same keys as in the 'geocode' and 'place' returns for googlemaps
+    mock_func_gm.return_value = [
+        {
+            "formatted_address": "mock_address",
+            "geometry": {
+                "location": {
+                    "lat": "mock_latitude",
+                    "lng": "mock_longitude"
+                }
+            },
+            "place_id": "mock_place_id",
+            "result": {
+                "name" : "mock_name"
             }
         }
-    }
+    ]
 
 def init_for_geocode_tests(monkeypatch):
     """
@@ -46,7 +43,7 @@ def init_for_geocode_tests(monkeypatch):
     related to the googlemaps 'geocode' return.
     """
     # the mocking process with the 'monkeypatch' fixture
-    monkeypatch.setattr(Institution, 'get_geocode_response', mock_func)
+    monkeypatch.setattr(Institution, 'get_geocode_response', mock_func_gm)
     new_inst = Institution("")
     return new_inst
 
@@ -63,7 +60,7 @@ def test_get_longitude(monkeypatch):
     assert value == "mock_longitude"
 
 def test_get_name(monkeypatch):
-    monkeypatch.setattr(Institution, 'get_place_response', mock_func)
+    monkeypatch.setattr(Institution, 'get_place_response', mock_func_gm)
     new_inst = Institution("")
     value = new_inst.get_name()
     assert value == "mock_name"
@@ -72,14 +69,26 @@ def test_get_place_id(monkeypatch):
     value = init_for_geocode_tests(monkeypatch).get_place_id()
     assert value == "mock_place_id"
 
-# nota: get_wiki_summary() is not tested directly,
-# as it uses methods and functions already tested
+
+mock_func_wiki = Mock()
 
 def test_get_wiki_text(monkeypatch):
-    monkeypatch.setattr(Institution, 'get_wiki_response', mock_func)
+    # the mock function returns a dict,
+    # with the same keys as in the wikipedia return
+    mock_func_wiki.return_value = {
+        "parse": {
+            "text": {
+                "*": "mock_wiki_text"
+            }
+        }
+    }
+    monkeypatch.setattr(Institution, 'get_wiki_response', mock_func_wiki)
     new_inst = Institution("")
     value = new_inst.get_wiki_text()
     assert value == "mock_wiki_text"
+
+# nota: get_wiki_summary() is not tested directly,
+# as it uses methods and functions already tested
 
 
 def test_ignore_http_tags():

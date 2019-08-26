@@ -7,8 +7,8 @@ from unittest.mock import Mock
 
 import pytest
 
-from oc_p07_grandpy.classes.institution import Institution
-from oc_p07_grandpy.classes.user_question import UserQuestion
+from classes.institution import Institution
+from classes.user_question import UserQuestion
 
 
 # initialization of three functions which mock three googlemaps returns:

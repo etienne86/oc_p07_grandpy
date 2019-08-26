@@ -5,7 +5,10 @@
 
 import random
 
-import oc_p07_grandpy.classes.institution
+from classes.app_map import AppMap
+from classes.app_marker import AppMarker
+from classes.institution import Institution
+from classes.point import Point
 
 
 class BotReply():
@@ -14,12 +17,14 @@ class BotReply():
     def __init__(self):
         """This special method is the class constructor."""
         super(BotReply, self).__init__()
+        self.acceptable_question = True
 
     def ask_for_completion(self):
         """
         This method is responsible for replying that
         the question was not complete enough to determine a location.
         """
+        self.acceptable_question = False
         message = "Je suis vraiment désolé, mais je n'ai pas compris " +\
             "ta question, car il me manque des informations concernant " +\
             "ta demande : pourrais-tu la reformuler ? " +\
@@ -31,6 +36,7 @@ class BotReply():
         This method is responsible for replying that the question
         was not precise enough to determine a unique location.
         """
+        self.acceptable_question = False
         message = "Je suis vraiment désolé, mais je n'ai pas compris " +\
             "ta question, car plusieurs lieux semblent correspondre à ta " +\
             "demande. Pourrais-tu me reposer ta question en précisant " +\
@@ -42,34 +48,40 @@ class BotReply():
         This method is responsible for replying that
         the sentence was not understood as an address request by the bot.
         """
+        self.acceptable_question = False
         message = "Je suis vraiment désolé, mais je n'ai pas compris " +\
             "ta question, malgré mes lunettes, mes appareils auditifs " +\
             "et ma mémoire d'éléphant. Si tu souhaites connaître l'adresse " +\
             "d'un lieu, pourrais-tu reformuler ta demande ?"
         return message
 
-    def display_map(self):
-        """
-        This method is responsible for displaying the map.
-        """
-        ## TO DO
-        pass
-
-    def give_answer_first(self):
+    def give_answer_first(self, inst):
         """
         This method is responsible for supplying
         the first part of the answer to the user (i.e. the address).
         """
-        ## TO DO
-        pass
+        if self.acceptable_question:
+            address = inst.get_formatted_address()
+        return "Voici l'adresse que tu souhaites :\n" + address
 
-    def give_answer_second(self):
+    def give_answer_second(self, inst):
         """
         This method is responsible for supplying
         the second part of the answer to the user (i.e. the wikipedia extract).
         """
-        ## TO DO
-        pass
+        if self.acceptable_question:
+            wiki_extr = inst.get_wiki_summary()
+        return "A ce propos, j'en connais un rayon sur ce lieu ! " + wiki_extr
+
+    def return_map(self, inst, zoom):
+        """
+        This method is responsible for returning the map.
+        """
+        if self.acceptable_question:
+            my_point = Point(inst.get_latitude(), inst.get_longitude())
+            my_app_marker = AppMarker(position=my_point, title=inst.get_name())
+            my_app_map = AppMap(marker=my_app_marker, zoom=zoom)
+        return my_app_map
 
     def welcome_message(self):
         """
