@@ -28,32 +28,34 @@ class UserQuestion():
         """
         result = {
             'acceptable_question': False,
-            'question': ""
+            'question': "",
+            'ask_for_something': ""
         }
-        # is this a question to request an address?
-        if not self.ask_for_location:
-            bot.ask_for_understanding()
-            self.analyze(bot)
-        # parse the user question
-        result['question'] = self.parse()
-        # is the question complete enough?
-        if not self.ask_complete_question():
-            bot.ask_for_completion()
-            self.analyze(bot)
-        # googlemaps request
-        inst = Institution(self.parse())
-        try:
-            inst.get_geocode_response()[0]['formatted_address']
-        except NoResponseError:
-            print('not found but captured')
-        except googlemaps.exceptions.HTTPError:
-            print('not found googlemaps error')
-        # is the question precise enough?
-        if not self.ask_precise_question():
-            bot.ask_for_precision()
-            self.analyze(bot)
-        # the question is acceptable
-        result['acceptable_question'] = True
+        while not result['acceptable_question']:
+            # is this a question to request an address?
+            if self.ask_for_location:
+                # parse the user question
+                result['question'] = self.parse()
+                # is the question complete enough?
+                if self.ask_complete_question():
+                    # googlemaps request
+                    inst = Institution(self.parse())
+                    try:
+                        inst.get_geocode_response()[0]['formatted_address']
+                    except NoResponseError:
+                        print('not found but captured')
+                    except googlemaps.exceptions.HTTPError:
+                        print('not found googlemaps error')
+                    # is the question precise enough?
+                    if self.ask_precise_question():
+                        # the question is acceptable
+                        result['acceptable_question'] = True
+                    else:
+                        result['ask_for_something'] = bot.ask_for_precision()
+                else:
+                    result['ask_for_something'] = bot.ask_for_completion()
+            else:
+                result['ask_for_something'] = bot.ask_for_understanding()
         return result
 
     def ask_complete_question(self):
@@ -105,24 +107,27 @@ class UserQuestion():
         This method is responsible for parsing the entered question
         into key words, if the question seems appropriate.
         """
-        # remove punctuation
-        string = re.sub(r"([,\?;\.\:!/\\\*\(\)\[\]])*",
-                        "",
-                        self.entered_question)
-        # remove redundant spaces
-        string = re.sub(r"( ){2,}", " ", string)
-        # transform to lowercase
-        string = string.lower()
-        # split
-        words_list = string.split()
-        # exclude stop words
-        limited_list = [word for word in words_list \
-            if word not in stop_words.all_fr]
-        # exclude stop expressions (two consecutive words)
-        lower_result = exclude_expressions(limited_list)
-        # capitalize for Google Maps and Wikipedia search
-        capitalized_result = [word.capitalize() for word in lower_result]
-        return " ".join(capitalized_result)
+        if self.entered_question == "":
+            return ""
+        else:
+            # remove punctuation
+            string = re.sub(r"([,\?;\.\:!/\\\*\(\)\[\]])*",
+                            "",
+                            self.entered_question)
+            # remove redundant spaces
+            string = re.sub(r"( ){2,}", " ", string)
+            # transform to lowercase
+            string = string.lower()
+            # split
+            words_list = string.split()
+            # exclude stop words
+            limited_list = [word for word in words_list \
+                if word not in stop_words.all_fr]
+            # exclude stop expressions (two consecutive words)
+            lower_result = exclude_expressions(limited_list)
+            # capitalize for Google Maps and Wikipedia search
+            capitalized_result = [word.capitalize() for word in lower_result]
+            return " ".join(capitalized_result)
 
 # sub function used in the method parse()
 def exclude_expressions(words):

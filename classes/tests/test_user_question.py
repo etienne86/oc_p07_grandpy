@@ -88,7 +88,7 @@ def test_parse():
     the parsing method on several sentences.
     """
     sentences = [
-        "",
+        "la",
         "Comment vas-tu ?",
         "Où est la poste ?",
         "Pourrais-tu me dire comment aller à la poste s'il te plaît ?",

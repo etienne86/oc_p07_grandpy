@@ -186,11 +186,10 @@ class Institution():
         from the wikipedia page dedicated to the institution.
         This method returns a 'str' value.
         """
-        # print(str(self.get_wiki_response())[0:300])
         try:
             return self.get_wiki_response()['parse']['text']['*']
-        except NoResponseError:
-            return 'not understood so not found'
+        except KeyError:
+            raise NoResponseError
 
 
 def ignore_http_tags(string):
