@@ -8,6 +8,7 @@ from unittest.mock import Mock
 import pytest
 
 from classes.institution import Institution
+from classes.institution import ignore_codes_and_hooks
 from classes.institution import ignore_http_tags, shorten_text
 
 
@@ -93,6 +94,21 @@ def test_get_wiki_text(monkeypatch):
 # nota: get_wiki_summary() is not tested directly,
 # as it uses methods and functions already tested
 
+
+def test_ignore_codes_and_hooks_with_only_codes():
+    string = "100&#160;km, this is huge!"
+    simple_string = "100km, this is huge!"
+    assert ignore_codes_and_hooks(string) == simple_string
+
+def test_ignore_codes_and_hooks_with_only_hooks():
+    string = "100km[1], this is huge[2]!"
+    simple_string = "100km, this is huge!"
+    assert ignore_codes_and_hooks(string) == simple_string
+
+def test_ignore_codes_and_hooks_with_both():
+    string = "100&#160;km[1], this is huge[2]!"
+    simple_string = "100km, this is huge!"
+    assert ignore_codes_and_hooks(string) == simple_string
 
 def test_ignore_http_tags():
     string = "<strong>Hello!</strong> We are <em>glad</em> to see you!"

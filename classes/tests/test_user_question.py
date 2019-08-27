@@ -62,6 +62,12 @@ def test_ask_for_location_false():
     question = UserQuestion(sentence)
     assert question.ask_for_location() == False
 
+def test_ask_for_location_false_with_only_one_word():
+    """The user does not ask for an address."""
+    sentence = "paris"
+    question = UserQuestion(sentence)
+    assert question.ask_for_location() == False
+
 def test_ask_precise_question_false_zero_result(monkeypatch):
     """The user does not precise the institution clearly,
     and Google Maps returns 0 result."""
@@ -88,7 +94,7 @@ def test_parse():
     the parsing method on several sentences.
     """
     sentences = [
-        "la",
+        "",
         "Comment vas-tu ?",
         "Où est la poste ?",
         "Pourrais-tu me dire comment aller à la poste s'il te plaît ?",
@@ -119,4 +125,4 @@ def test_parse():
     for _ in range(len(sentences)):
         question = UserQuestion(sentences.pop(0))
         results.append(question.parse() == parsed_sentences.pop(0))
-    return not (False in results)
+    assert not (False in results)

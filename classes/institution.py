@@ -163,12 +163,15 @@ class Institution():
         while n < len(splitted_text):
             # do not match the focused string with the exceptions
             if (re.match(exceptions[0], splitted_text[n]) is None)\
-                    and (re.match(exceptions[1], splitted_text[n]) is None):
+                    and (re.match(exceptions[1], splitted_text[n]) is None)\
+                    and "<p>" in splitted_text[n]: # need <p> inside section
                 # get the content between the firsts <p> and </p>
                 temp_string = splitted_text[n].split("<p>")[1] # after '<p>'
                 temp_string = temp_string.split("</p>")[0] # before '</p>'
                 # clean the text
                 temp_string = ignore_http_tags(temp_string)
+                # decode the text
+                temp_string = ignore_codes_and_hooks(temp_string)
                 # shorten the text, if necessary
                 result = shorten_text(temp_string)
                 # indicate that the method will return a 'str' value
@@ -189,7 +192,27 @@ class Institution():
         try:
             return self.get_wiki_response()['parse']['text']['*']
         except KeyError:
-            raise NoResponseError
+            return "Enfin, j'en connaissais un rayon... j'ai un peu oublié !"
+
+def ignore_codes_and_hooks(string):
+    """
+    This function returns the given string, without:
+    - some codes (from encoding)
+    - the hooks
+    """
+    # ignore codes
+    codes = {"&#160;": ""}
+    for key in codes:
+        intermediate_result = string.replace(key, codes[key])
+    # ignore hooks
+    result = ""
+    regex = r"\[.*?\]" # regular expression for text inside hooks
+    # keep only what is not inside hooks
+    result_list = re.split(regex, intermediate_result)
+    # concatenate all elements
+    for sub in result_list:
+        result += sub
+    return result
 
 
 def ignore_http_tags(string):

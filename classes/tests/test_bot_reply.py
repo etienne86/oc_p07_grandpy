@@ -54,5 +54,5 @@ def test_give_answer_second(monkeypatch):
     monkeypatch.setattr(Institution, 'get_wiki_summary', mock_func_2)
     bot = BotReply()
     inst = Institution("")
-    text = "A ce propos, j'en connais un rayon sur ce lieu ! mock_wiki_summary"
+    text = "A ce propos, j'en connais un rayon à ce sujet ! mock_wiki_summary"
     assert bot.give_answer_second(inst) == text

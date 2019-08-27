@@ -31,31 +31,30 @@ class UserQuestion():
             'question': "",
             'ask_for_something': ""
         }
-        while not result['acceptable_question']:
-            # is this a question to request an address?
-            if self.ask_for_location:
-                # parse the user question
-                result['question'] = self.parse()
-                # is the question complete enough?
-                if self.ask_complete_question():
-                    # googlemaps request
-                    inst = Institution(self.parse())
-                    try:
-                        inst.get_geocode_response()[0]['formatted_address']
-                    except NoResponseError:
-                        print('not found but captured')
-                    except googlemaps.exceptions.HTTPError:
-                        print('not found googlemaps error')
-                    # is the question precise enough?
-                    if self.ask_precise_question():
-                        # the question is acceptable
-                        result['acceptable_question'] = True
-                    else:
-                        result['ask_for_something'] = bot.ask_for_precision()
+        # is this a question to request an address?
+        if self.ask_for_location():
+            # parse the user question
+            result['question'] = self.parse()
+            # is the question complete enough?
+            if self.ask_complete_question():
+                # googlemaps request
+                inst = Institution(self.parse())
+                try:
+                    inst.get_geocode_response()[0]['formatted_address']
+                except NoResponseError:
+                    print('not found but captured')
+                except googlemaps.exceptions.HTTPError:
+                    print('not found googlemaps error')
+                # is the question precise enough?
+                if self.ask_precise_question():
+                    # the question is acceptable
+                    result['acceptable_question'] = True
                 else:
-                    result['ask_for_something'] = bot.ask_for_completion()
+                    result['ask_for_something'] = bot.ask_for_precision()
             else:
-                result['ask_for_something'] = bot.ask_for_understanding()
+                result['ask_for_something'] = bot.ask_for_completion()
+        else:
+            result['ask_for_something'] = bot.ask_for_understanding()
         return result
 
     def ask_complete_question(self):
@@ -76,7 +75,9 @@ class UserQuestion():
         This returns 'True' if yes, 'False' if not.
         """
         key_words = [
-            "adresse", "comment all", "comment va", "ou", "où"
+            " adresse", "aimerai aller", "aimerais aller", "comment all",
+            "comment va", "localis", " me rendre ", "ou ", "où ",
+            "veux aller", "voudrai aller", "voudrais aller"
         ]
         result = False
         while key_words and not result:

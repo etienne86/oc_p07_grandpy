@@ -19,6 +19,8 @@ def main():
     user_quest = UserQuestion(entered_question)
     # loop as far as the user does not ask an acceptable question
     while not user_quest.analyze(bot)['acceptable_question']:
+        # tell the user why she/he has to retype her/his question
+        print(user_quest.analyze(bot)['ask_for_something'])
         # ask for the user question
         entered_question = input("votre question svp ? ")
         user_quest = UserQuestion(entered_question)

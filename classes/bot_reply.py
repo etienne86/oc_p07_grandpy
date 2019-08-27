@@ -60,8 +60,7 @@ class BotReply():
         This method is responsible for supplying
         the first part of the answer to the user (i.e. the address).
         """
-        if self.acceptable_question:
-            address = inst.get_formatted_address()
+        address = inst.get_formatted_address()
         return "Voici l'adresse que tu souhaites :\n" + address
 
     def give_answer_second(self, inst):
@@ -69,18 +68,20 @@ class BotReply():
         This method is responsible for supplying
         the second part of the answer to the user (i.e. the wikipedia extract).
         """
-        if self.acceptable_question:
+        if inst.get_wiki_summary() == "":
+            wiki_extr = "Enfin, j'en connaissais un rayon... " +\
+                "j'ai un peu oublié !"
+        else:
             wiki_extr = inst.get_wiki_summary()
-        return "A ce propos, j'en connais un rayon sur ce lieu ! " + wiki_extr
+        return "A ce propos, j'en connais un rayon à ce sujet ! " + wiki_extr
 
     def return_map(self, inst, zoom):
         """
         This method is responsible for returning the map.
         """
-        if self.acceptable_question:
-            my_point = Point(inst.get_latitude(), inst.get_longitude())
-            my_app_marker = AppMarker(position=my_point, title=inst.get_name())
-            my_app_map = AppMap(marker=my_app_marker, zoom=zoom)
+        my_point = Point(inst.get_latitude(), inst.get_longitude())
+        my_app_marker = AppMarker(position=my_point, title=inst.get_name())
+        my_app_map = AppMap(marker=my_app_marker, zoom=zoom)
         return my_app_map
 
     def welcome_message(self):
