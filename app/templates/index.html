@@ -1,12 +1,51 @@
 <html>
+    
     <head>
-        {% if title %}
-        <title>{{ title }}</title>
-        {% else %}
+        <meta charset="utf-8" />
         <title>Chez GrandPy</title>
-        {% endif %}
+        <link rel="stylesheet" href="../static/css/style.css"></style>
     </head>
+
     <body>
-        Hello world!
+
+        <header>
+            <p>
+                Bienvenue chère visiteuse ou cher visiteur !
+            </p>
+            <p id="logo">
+                <img src="../static/img/grandpy_logo_transparent.png" alt="Logo GrandPyBot" />
+            </p>
+            <p>
+                Je suis GrandPy Bot, à ton service !
+            </p>
+        </header>
+
+        <section>
+            <div id="dialogue">
+                <p class="user_input">Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1</p>
+                <p class="bot_reply">Paragraphe 2</p>
+            </div>
+        </section>
+
+        <section>
+            <form method="post" action="traitement.py">
+                <p>                 
+                    <textarea name="user_question" id="user_question" placeholder="Votre question ici" rows="5"></textarea>
+                    <br />
+                    <input type="submit" value="Envoyer" />
+                </p>
+
+            </form>
+        </section>
+
+        <footer>
+            <p>
+                Etienne BARBIER - <a href="https://github.com/etienne86">lien Github</a>
+            </p>
+        </footer>
+
+        <script src="../static/js/grandpy.js"></script>
+
     </body>
+
 </html>

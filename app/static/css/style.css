@@ -1,0 +1,73 @@
+@font-face {
+    font-family: 'anonymousregular';
+    src: url('../fonts/Anonymous-webfont.eot');
+    src: url('../fonts/Anonymous-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Anonymous-webfont.woff2') format('woff2'),
+         url('../fonts/Anonymous-webfont.woff') format('woff'),
+         url('../fonts/Anonymous-webfont.ttf') format('truetype'),
+         url('../fonts/Anonymous-webfont.svg#anonymousregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body
+{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-family: 'anonymousregular', Arial, sans-serif;;
+    font-size: 0.7em;
+    height: auto;
+}
+
+header
+{
+    background-color: #D4E9FF;
+}
+
+footer
+{
+    background-color: #D4E9FF;
+    justify-content: flex-end;
+}
+
+#dialogue
+{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 600px;
+}
+
+@media all and (max-width: 1024px)
+{
+    #dialogue
+    {
+        width: auto;
+    }
+
+    #user_question
+    {
+        width: auto;
+    }
+}
+
+.user_input
+{
+    width: auto;
+    padding: 3px;
+    border-radius: 5px;
+    text-align: right;
+    align-self: flex-end;
+    background-color: #0BF; 
+}
+
+.bot_reply
+{
+    width: auto;
+    padding: 3px;
+    border-radius: 5px;
+    text-align: left;
+    align-self: flex-start;
+    background-color: #CCC; 
+}
