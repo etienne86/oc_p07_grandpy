@@ -94,7 +94,9 @@ def test_parse():
     the parsing method on several sentences.
     """
     sentences = [
+        "Salut GrandPy ! Est-ce que tu connais l'adresse d'OpenClassrooms ?",
         "",
+        "       ",
         "Comment vas-tu ?",
         "Où est la poste ?",
         "Pourrais-tu me dire comment aller à la poste s'il te plaît ?",
@@ -107,9 +109,11 @@ def test_parse():
         "salut grand py bot, est ce que tu connais " +\
             "la basilique de saint maximin",
         "ou est la tour eiffel",
-        "ou trouver la cathedrale notre dame"
+        "ou trouver la cathedrale notre dame",
     ]
     parsed_sentences = [
+        "Openclassrooms",
+        "",
         "",
         "",
         "Poste",
@@ -119,7 +123,7 @@ def test_parse():
         "Poste Poitiers",
         "Basilique Saint Maximin",
         "Tour Eiffel",
-        "Cathedrale Dame"
+        "Cathedrale Dame",
     ]
     results = []
     for _ in range(len(sentences)):

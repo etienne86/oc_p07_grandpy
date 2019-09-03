@@ -40,7 +40,7 @@ class BotReply():
         message = "Je suis vraiment désolé, mais je n'ai pas compris " +\
             "ta question, car plusieurs lieux semblent correspondre à ta " +\
             "demande. Pourrais-tu me reposer ta question en précisant " +\
-            "l'endroit dont tu souhaites connaître l'adresse ?"
+            "davantage l'endroit dont tu souhaites connaître l'adresse ?"
         return message
 
     def ask_for_understanding(self):

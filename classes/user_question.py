@@ -40,11 +40,12 @@ class UserQuestion():
                 # googlemaps request
                 inst = Institution(self.parse())
                 try:
-                    inst.get_geocode_response()[0]['formatted_address']
+                    geo_results = inst.get_geocode_response()["results"]
+                    geo_results[0]['formatted_address']
                 except NoResponseError:
                     print('not found but captured')
-                except googlemaps.exceptions.HTTPError:
-                    print('not found googlemaps error')
+                except IndexError:
+                    print('index error')
                 # is the question precise enough?
                 if self.ask_precise_question():
                     # the question is acceptable
@@ -75,7 +76,7 @@ class UserQuestion():
         This returns 'True' if yes, 'False' if not.
         """
         key_words = [
-            " adresse", "aimerai aller", "aimerais aller", "comment all",
+            "adresse", "aimerai aller", "aimerais aller", "comment all",
             "comment va", "localis", " me rendre ", "ou ", "où ",
             "veux aller", "voudrai aller", "voudrais aller"
         ]
@@ -95,7 +96,7 @@ class UserQuestion():
         """
         inst = Institution(self.parse())
         try:
-            length = len(inst.get_geocode_response())
+            length = len(inst.get_geocode_response()["results"])
             if length == 1:
                 return True
             else:
@@ -115,6 +116,10 @@ class UserQuestion():
             string = re.sub(r"([,\?;\.\:!/\\\*\(\)\[\]])*",
                             "",
                             self.entered_question)
+            # remove apostrophes
+            string = string.replace("\'", " ")
+            # remove quotation marks
+            string = string.replace("\"", " ")
             # remove redundant spaces
             string = re.sub(r"( ){2,}", " ", string)
             # transform to lowercase

@@ -28,18 +28,22 @@ def init_for_geocode_tests(monkeypatch):
     """
     # the mock function returns a list containing a dict,
     # with the same keys as in the 'geocode' return for googlemaps
-    mock_func_geocode.return_value = [
-        {
-            "formatted_address": "mock_address",
-            "geometry": {
-                "location": {
-                    "lat": "mock_latitude",
-                    "lng": "mock_longitude"
-                }
-            },
-            "place_id": "mock_place_id"
-        }
-    ]
+    mock_func_geocode.return_value = {
+        "results": [
+            {
+                "formatted_address": "mock_address",
+                "geometry": {
+                    "location": {
+                        "lat": "mock_latitude",
+                        "lng": "mock_longitude"
+                    }
+                },
+                "place_id": "mock_place_id"
+            }
+        ],
+        "status": "OK"
+    }
+
     # the mocking process with the 'monkeypatch' fixture
     monkeypatch.setattr(Institution, 'get_geocode_response', mock_func_geocode)
     new_inst = Institution("")

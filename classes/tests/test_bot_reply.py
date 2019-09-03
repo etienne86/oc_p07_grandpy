@@ -15,21 +15,20 @@ def test_return_map(monkeypatch):
     mock_func_map = Mock()
     # the mock function returns a dict:
     # with the same key as in the 'geocode' return for googlemaps
-    mock_func_map.return_value = [
-        {
-            "formatted_address": "mock_address",
-            "geometry": {
-                "location": {
-                    "lat": "mock_latitude",
-                    "lng": "mock_longitude"
-                }
-            },
-            "place_id": "mock_place_id",
-            "result": {
-                "name" : "mock_name"
-            },
-        }
-    ]
+    mock_func_map.return_value = {
+        "results": [
+            {
+                "formatted_address": "mock_address",
+                "geometry": {
+                    "location": {
+                        "lat": "mock_latitude",
+                        "lng": "mock_longitude"
+                    }
+                },
+                "place_id": "mock_place_id"
+            }
+        ]
+    }
     monkeypatch.setattr(Institution, 'get_geocode_response', mock_func_map)
     bot = BotReply()
     inst = Institution("")
@@ -40,7 +39,12 @@ def test_give_answer_first(monkeypatch):
     mock_func_1 = Mock()
     # the mock function returns a dict:
     # with the same key as in the 'geocode' return for googlemaps
-    mock_func_1.return_value = [{"formatted_address": "mock_address"}]
+    mock_func_1.return_value = {
+        "results":
+            [
+                {"formatted_address": "mock_address"}
+            ]
+    }
     monkeypatch.setattr(Institution, 'get_geocode_response', mock_func_1)
     bot = BotReply()
     inst = Institution("")

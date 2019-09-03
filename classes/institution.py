@@ -36,47 +36,68 @@ class Institution():
         This method returns a 'str' value.
         """
         try:
-            address = self.get_geocode_response()[0]['formatted_address']
-            return address
+            results = self.get_geocode_response()["results"]
+            return results[0]['formatted_address']
         except KeyError:
             return 'key error'
+        except IndexError:
+            return 'index error'
         except NoResponseError:
             return 'not understood so not found'
+
+    # def get_geocode_response_0(self):
+    #     """
+    #     This method is responsible for getting the
+    #     geocode response from the googlemaps module.
+    #     This method returns a 'list' value, or raise an exception.
+    #     """
+    #     gmaps = googlemaps.Client(key=Config.GOOGLE_MAPS_API_KEY)
+    #     geocode_result = gmaps.geocode(self.entered_name)
+    #     try:
+    #         return geocode_result # returns a list with one or more elements
+    #     except googlemaps.exceptions.HTTPError:
+    #         raise NoResponseError
 
     def get_geocode_response(self):
         """
         This method is responsible for getting the
-        geocode response from the googlemaps module.
+        geocode response from the googlemaps API.
         This method returns a 'list' value, or raise an exception.
         """
-        gmaps = googlemaps.Client(key=Config.GOOGLE_MAPS_API_KEY)
-        geocode_result = gmaps.geocode(self.entered_name)
-        try:
-            return geocode_result # returns a list with one or more elements
-        except googlemaps.exceptions.HTTPError:
+        # execute the HTTP request
+        geocode_response_http = requests.get(
+            "https://maps.googleapis.com/maps/api/geocode/json?"\
+                + "address=" + self.entered_name\
+                + "&key=" + Config.GOOGLE_MAPS_API_KEY
+        )
+        geocode_response_dict = geocode_response_http.json() # type is dict
+        # analyze and treat the HTTP response
+        if geocode_response_http.status_code == 200:
+            return geocode_response_dict
+        else:
             raise NoResponseError
 
     def get_latitude(self):
         """
         This method is responsible for getting the
-        latitude from the googlemaps module.
+        latitude from the googlemaps API.
         This method returns a 'float' value.
         """
         try:
-            lat = self.get_geocode_response()[0]['geometry']['location']['lat']
-            return lat
+            results = self.get_geocode_response()["results"]
+            return results[0]['geometry']['location']['lat']
         except NoResponseError:
             return 'not understood so not found'
 
     def get_longitude(self):
         """
         This method is responsible for getting the
-        longitude from the googlemaps module.
+        longitude from the googlemaps API.
         This method returns a 'float' value.
         """
         try:
-            lng = self.get_geocode_response()[0]['geometry']['location']['lng']
-            return lng
+            results = self.get_geocode_response()["results"]
+            return results[0]['geometry']['location']['lng']
         except NoResponseError:
             return 'not understood so not found'
 
@@ -94,18 +115,18 @@ class Institution():
     def get_place_id(self):
         """
         This method is responsible for getting the
-        place_id from the googlemaps module.
+        place_id from the googlemaps API.
         This method returns a 'str' value.
         """
         try:
-            return self.get_geocode_response()[0]['place_id']
+            return self.get_geocode_response()["results"][0]['place_id']
         except NoResponseError:
             return 'not understood so not found'
 
     def get_place_response(self):
         """
         This method is responsible for getting the
-        place response from the googlemaps module.
+        place response from the googlemaps API.
         This method returns a 'dict' value, or raise an exception.
         """
         # execute the HTTP request
