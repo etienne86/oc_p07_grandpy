@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-# coding: utf-8
+# coding: utf8
 
 """This module contains the tests related to the 'UserQuestion' class."""
 
@@ -12,17 +12,23 @@ from classes.user_question import UserQuestion
 
 
 # initialization of three functions which mock three googlemaps returns:
-# - a list of 0 result
+# - a dict with 0 result
 mock_func_0 = Mock()
-mock_func_0.return_value = []
-# - a list of 1 result
+mock_func_0.return_value = {"results": [], "status": "ZERO_RESULTS"}
+# - a dict with 1 result
 mock_func_1 = Mock()
-mock_func_1.return_value = [{}]
-# - a list of several results (e.g. 2 results)
+mock_func_1.return_value = {"results": [{"mock_dict"}], "status": "OK"}
+# - a dict with several results (e.g. 2 results)
 mock_func_2 = Mock()
-mock_func_2.return_value = [{}, {}]
+mock_func_2.return_value = {
+    "results": [
+        {"first_mock_dict"},
+        {"second_mock_dict"}
+    ],
+    "status": "OK"
+}
 
-# nota: analyze() is not tested directly,
+# nota: analyze() is not tested entirely,
 # as it uses methods already tested
 
 def test_ask_complete_question_true():

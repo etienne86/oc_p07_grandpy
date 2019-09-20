@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-# coding: utf-8
+# coding: utf8
 
 """This module contains the 'UserQuestion' class."""
 
@@ -9,7 +9,7 @@ import googlemaps
 
 # from oc_p07_grandpy.classes.bot_reply import BotReply
 from classes.institution import Institution, NoResponseError
-import classes.stop_words as stop_words
+import data.stop_words as stop_words
 
 
 class UserQuestion():

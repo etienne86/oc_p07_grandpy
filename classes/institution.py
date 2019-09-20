@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-# coding: utf-8
+# coding: utf8
 
 """This module mainly contains the 'Institution' class."""
 

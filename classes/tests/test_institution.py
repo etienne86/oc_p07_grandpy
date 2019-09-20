@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-# coding: utf-8
+# coding: utf8
 
 """This module contains the tests related to the 'Institution' class."""
 

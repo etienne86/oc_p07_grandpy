@@ -1,14 +1,12 @@
 #! /usr/bin/env python3
-# coding: utf-8
+# coding: utf8
 
 """This module contains the 'BotReply' class."""
 
 import random
 
 from classes.app_map import AppMap
-from classes.app_marker import AppMarker
 from classes.institution import Institution
-from classes.point import Point
 
 
 class BotReply():
@@ -79,9 +77,10 @@ class BotReply():
         """
         This method is responsible for returning the map.
         """
-        my_point = Point(inst.get_latitude(), inst.get_longitude())
-        my_app_marker = AppMarker(position=my_point, title=inst.get_name())
-        my_app_map = AppMap(marker=my_app_marker, zoom=zoom)
+        my_app_map = AppMap(inst.get_latitude(),
+                            inst.get_longitude(),
+                            inst.get_name(),
+                            zoom)
         return my_app_map
 
     def welcome_message(self):
