@@ -1,8 +1,81 @@
-from flask import render_template # , flash, redirect, url_for
+#! /usr/bin/env python3
+# coding: utf8
+
+import time
+import uuid
+
+from flask import render_template, request, jsonify, url_for
+# from flask import flash, redirect
 from app import app
+from classes.app_map import AppMap
+from classes.bot_reply import BotReply
+from classes.institution import Institution
+from classes.user_question import UserQuestion
+from various.config import Config
 
 
-@app.route('/')
-@app.route('/index/')
+@app.route('/', methods=['GET'])
+@app.route('/index/', methods=['GET'])
 def index():
-    return render_template('index.html', title='Chez GrandPy')
+    bot = BotReply()
+    return render_template('index.html',
+                           title='Chez GrandPy',
+                           bot=bot,
+                           googlemaps_api_key=Config.GOOGLE_MAPS_API_KEY)
+
+
+@app.route('/postmethod', methods = ['POST'])
+def post_javascript_data():
+    jsdata = request.form['entered_data']
+    user_quest = UserQuestion(jsdata)
+    bot = BotReply()
+    # initialize a dict with the bot replies
+    bot_rep = {"phrases": []}
+    # check if this is an acceptable question
+    if not user_quest.analyze(bot)['acceptable_question']:
+        bot = BotReply()
+        # tell the user why she/he has to retype her/his question
+        bot_rep["phrases"] +=  [user_quest.analyze(bot)['ask_for_something']]
+    else:
+        # initialize the institution
+        inst = Institution(user_quest.analyze(bot)['question'])
+        # fill the phrases
+        bot_rep["phrases"] += [bot.give_answer_first(inst)]
+        bot_rep["phrases"] += [bot.give_answer_second(inst)]
+        # provide the map variables
+        app_map = bot.return_map(inst, zoom=15)
+        bot_rep["map"] = {
+            "lat": app_map.lat,
+            "lng": app_map.lng,
+            "title": app_map.title,
+            "zoom": app_map.zoom
+        }
+    return jsonify(bot_rep)
+    
+   
+def create_tmp_file(text):
+    unique_id = str(uuid.uuid1())
+    with open('app/tmp/' + unique_id + '.txt', 'w') as file:
+        file.write(text)
+    return unique_id
+
+def get_file_content(unique_id):
+    with open('app/tmp/' + unique_id + '.txt', 'r') as file:
+        return file.read()
+
+
+# def listen_data():
+#     """
+#     This function is the function executed in background,
+#     waiting for data entererd by the user.
+#     """
+#     found = False
+#     while not found:
+#         try:
+#             entered_question = get_file_content("")
+#         except FileNotFoundError:
+#             time.sleep(0.5)
+#         else:
+#             found = True
+#     user_quest = UserQuestion(entered_question)
+#     return user_quest
