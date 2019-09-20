@@ -10,7 +10,7 @@
 
         <header>
             <p>
-                Bienvenue chère visiteuse ou cher visiteur !
+                Bienvenue chère visiteuse, cher visiteur !
             </p>
             <p id="logo">
                 <img src="../static/img/grandpy_logo_transparent.png" alt="Logo GrandPyBot" />
@@ -20,19 +20,15 @@
             </p>
         </header>
 
-        <section>
-            <div id="dialogue">
-                <p class="user_input">Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1 Paragraphe 1</p>
-                <p class="bot_reply">Paragraphe 2</p>
-            </div>
-        </section>
+        <section id="dialogue"></section>
 
         <section>
-            <form method="post" action="traitement.py">
+            <form id="form" method="post" action="#">
                 <p>                 
-                    <textarea name="user_question" id="user_question" placeholder="Votre question ici" rows="5"></textarea>
+                    <textarea name="user_input" id="user_input" placeholder="Votre question ici" rows="5" required></textarea>
                     <br />
-                    <input type="submit" value="Envoyer" />
+                    <input type="submit" value="Envoyer" name="submit" />
+                    <input type="reset" value="Effacer" />
                 </p>
 
             </form>
@@ -44,7 +40,17 @@
             </p>
         </footer>
 
-        <script src="../static/js/grandpy.js"></script>
+<!--         <script src="../static/js/ajax.js"></script> -->
+
+         <script src="https://code.jquery.com/jquery-1.12.3.js"   integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="   crossorigin="anonymous"></script>
+
+        <script id="js_01" type="text/javascript" src="../static/js/grandpy.js" wlcmMsg="{{ bot.welcome_message() }}"></script>
+
+<!--         <script id="js_01" type="text/javascript" src="../static/js/grandpy.js" wlcmMsg="{{ bot.welcome_message() }}" lat="{{ lat }}" lng="{{ lng }}" zoom="{{ zoom }}" markerTitle="{{ marker_title }}"></script> -->
+
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key={{ googlemaps_api_key }}&callback=initMap">
+        </script>
 
     </body>
 

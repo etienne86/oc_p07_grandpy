@@ -2,7 +2,6 @@
     font-family: 'anonymousregular';
     src: url('../fonts/Anonymous-webfont.eot');
     src: url('../fonts/Anonymous-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/Anonymous-webfont.woff2') format('woff2'),
          url('../fonts/Anonymous-webfont.woff') format('woff'),
          url('../fonts/Anonymous-webfont.ttf') format('truetype'),
          url('../fonts/Anonymous-webfont.svg#anonymousregular') format('svg');
@@ -35,10 +34,41 @@ footer
 {
     display: flex;
     flex-direction: column;
-    margin: auto;
+    align-self: center;
     width: 600px;
 }
 
+.user_question, .bot_reply
+{
+    text-align: left;
+    width: auto;
+    padding: 3px;
+    border-radius: 5px;
+    margin: 3px;
+}
+
+.user_question
+{
+    align-self: flex-end;
+    background-color: #0BF;
+}
+
+.bot_reply
+{
+    align-self: flex-start;
+    background-color: #CCC; 
+}
+
+.map
+{
+    padding: 3px;
+    border-radius: 5px;
+    height: 100px;
+    margin: 3px;
+    width: auto;
+}
+
+/* media queries */
 @media all and (max-width: 1024px)
 {
     #dialogue
@@ -46,28 +76,8 @@ footer
         width: auto;
     }
 
-    #user_question
+    #user_input
     {
         width: auto;
     }
-}
-
-.user_input
-{
-    width: auto;
-    padding: 3px;
-    border-radius: 5px;
-    text-align: right;
-    align-self: flex-end;
-    background-color: #0BF; 
-}
-
-.bot_reply
-{
-    width: auto;
-    padding: 3px;
-    border-radius: 5px;
-    text-align: left;
-    align-self: flex-start;
-    background-color: #CCC; 
 }
