@@ -20,13 +20,18 @@ form.addEventListener("submit", function (e) {
     e.preventDefault();
     // add the user question into the dialogue (i.e. display the user question)
     var question = form.elements.user_input.value;
-    var divElt = document.createElement("div");
-    divElt.setAttribute("class", "user_question");
-    divElt.textContent = question;
-    document.getElementById("dialogue").appendChild(divElt);
+    var divQuestElt = document.createElement("div");
+    divQuestElt.setAttribute("class", "user_question");
+    divQuestElt.textContent = question;
+    document.getElementById("dialogue").appendChild(divQuestElt);
     // empty the textarea (inside the form)
     var formElt = document.getElementById("form");
     formElt.reset();
+    // show the 'loader' image
+    var divLoaderElt = document.createElement("div");
+    divLoaderElt.id = "loader";
+    divLoaderElt.innerHTML = "<img src='../static/img/loader.gif' alt='chargement...' />";
+    document.getElementById("dialogue").appendChild(divLoaderElt);
     // send data to the server
     $.post( "/postmethod", {
         entered_data: JSON.stringify(question)
@@ -34,17 +39,16 @@ form.addEventListener("submit", function (e) {
         var phrases = resp["responseJSON"]["phrases"];
         // display either the address (if the question was understood)
         // or the reason why the bot did not understand the question
-        divElt = document.createElement("div");
-        divElt.setAttribute("class", "bot_reply");
-        // divElt.textContent = phrases;
-        divElt.textContent = phrases[0];
-        document.getElementById("dialogue").appendChild(divElt);
+        var divBotElt = document.createElement("div");
+        divBotElt.setAttribute("class", "bot_reply");
+        divBotElt.textContent = phrases[0];
+        document.getElementById("dialogue").appendChild(divBotElt);
         // if the question was understood by the bot
         if (phrases.length !== 1) {
             // display the map
-            var divElt = document.createElement("div");
-            divElt.setAttribute("class", "map");
-            document.getElementById("dialogue").appendChild(divElt);
+            var divMapElt = document.createElement("div");
+            divMapElt.setAttribute("class", "map");
+            document.getElementById("dialogue").appendChild(divMapElt);
             var myMap = resp["responseJSON"]["map"];
             var myLat = myMap.lat;
             var myLng = myMap.lng;
@@ -53,14 +57,19 @@ form.addEventListener("submit", function (e) {
             displayMap(myLat, myLng, myZoom, myTitle);
             map_number = map_number + 1;
             // display the short story (from wikipedia)
-            divElt = document.createElement("div");
-            divElt.setAttribute("class", "bot_reply");
-            divElt.textContent = phrases[1];
-            document.getElementById("dialogue").appendChild(divElt);
+            var divBotElt = document.createElement("div");
+            divBotElt.setAttribute("class", "bot_reply");
+            divBotElt.textContent = phrases[1];
+            document.getElementById("dialogue").appendChild(divBotElt);
         }
+        // hide the 'loader' image
+        var divEmptyLoaderElt = document.createElement("div");
+        divEmptyLoaderElt.innerHTML = "";
+        document.getElementById("dialogue").replaceChild(divEmptyLoaderElt, divLoaderElt);
     });
 });
 
+// the following function is provided in the Google API documentation
 function displayMap(myLat, myLng, myZoom, myTitle) {
     var myLatLng = {lat: myLat, lng: myLng};
 
@@ -75,42 +84,3 @@ function displayMap(myLat, myLng, myZoom, myTitle) {
         title: myTitle
     });
 }
-
-// function getData(question) {
-//     $.post( "/postmethod", {
-//         entered_data: JSON.stringify(question)
-//     });
-// }
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////
-//                              DISPLAY THE MAP                              //
-///////////////////////////////////////////////////////////////////////////////
-
-// var divElt = document.createElement("div");
-// divElt.setAttribute("class", "map");
-// document.getElementById("dialogue").appendChild(divElt);
-
-// // passing the python variables to the map
-// var myLat = Number(document.getElementById("js_01").getAttribute("lat"));
-// var myLng = Number(document.getElementById("js_01").getAttribute("lng"));
-// var myZoom = Number(document.getElementById("js_01").getAttribute("zoom"));
-// var myTitle = document.getElementById("js_01").getAttribute("markerTitle");
-
-// function initMap() {
-//     var myLatLng = {lat: myLat, lng: myLng};
-
-//     var map = new google.maps.Map(document.getElementsByClassName('map')[0], {
-//         zoom: myZoom,
-//         center: myLatLng
-//     });
-
-//     var marker = new google.maps.Marker({
-//         position: myLatLng,
-//         map: map,
-//         title: myTitle
-//     });
-// }
-

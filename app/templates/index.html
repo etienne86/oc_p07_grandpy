@@ -20,19 +20,23 @@
             </p>
         </header>
 
-        <section id="dialogue"></section>
+        <div id="container">
+       
+            <section id="dialogue"></section>
 
-        <section>
-            <form id="form" method="post" action="#">
-                <p>                 
-                    <textarea name="user_input" id="user_input" placeholder="Votre question ici" rows="5" required></textarea>
-                    <br />
-                    <input type="submit" value="Envoyer" name="submit" />
-                    <input type="reset" value="Effacer" />
-                </p>
+            <section>
+                <form id="form" method="post" action="#">
+                    <p>                 
+                        <textarea name="user_input" id="user_input" placeholder="Votre question ici" rows="5" required></textarea>
+                        <br />
+                        <input type="submit" value="Envoyer" name="submit" />
+                        <input type="reset" value="Effacer" />
+                    </p>
 
-            </form>
-        </section>
+                </form>
+            </section>
+
+        </div>
 
         <footer>
             <p>
@@ -40,16 +44,12 @@
             </p>
         </footer>
 
-<!--         <script src="../static/js/ajax.js"></script> -->
-
          <script src="https://code.jquery.com/jquery-1.12.3.js"   integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="   crossorigin="anonymous"></script>
 
         <script id="js_01" type="text/javascript" src="../static/js/grandpy.js" wlcmMsg="{{ bot.welcome_message() }}"></script>
 
-<!--         <script id="js_01" type="text/javascript" src="../static/js/grandpy.js" wlcmMsg="{{ bot.welcome_message() }}" lat="{{ lat }}" lng="{{ lng }}" zoom="{{ zoom }}" markerTitle="{{ marker_title }}"></script> -->
-
         <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key={{ googlemaps_api_key }}&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key={{ googlemaps_api_key }}&language=fr">
         </script>
 
     </body>
