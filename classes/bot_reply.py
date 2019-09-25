@@ -13,7 +13,7 @@ class BotReply():
     """This class is used to get and treat the question asked by the user."""
     
     def __init__(self):
-        """This special method is the class constructor."""
+        """Build a bot reply."""
         super(BotReply, self).__init__()
         self.acceptable_question = True
 
@@ -91,7 +91,7 @@ class BotReply():
         welcome_part_1 = ["Bonjour ", "Coucou ", "Bien le bonjour "]
         welcome_part_2 = ["mon poussin ! ", "mon chou ! ", "mon petit ! "]
         welcome_part_3 = [
-            "J'ai l'impression que tu cherches une addresse : " +\
+            "J'ai l'impression que tu cherches une adresse : " +\
                 "dis-moi, en quoi puis-je t'aider ?",
             "Je t'écoute, où souhaites-tu te rendre ?",
             "Raconte-moi où tu veux aller, et je te dirai où cela se trouve !"

@@ -10,7 +10,7 @@ class AppMap():
     """
     
     def __init__(self, lat, lng, title="C'est ici !", zoom=15):
-        """This special method is the class constructor."""
+        """Build a map, based on lat, lng, title and zoom."""
         super(AppMap, self).__init__()
         self.lat = lat # type is float
         self.lng = lng # type is float       

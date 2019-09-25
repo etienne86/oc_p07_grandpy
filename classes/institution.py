@@ -5,7 +5,6 @@
 
 import re
 
-import googlemaps
 import requests
 
 from various.config import Config
@@ -25,14 +24,14 @@ class Institution():
     """
     
     def __init__(self, entered_name):
-        """This special method is the class constructor."""
+        """Build an institution, based on the 'entered_name'."""
         super(Institution, self).__init__()
         self.entered_name = entered_name # type is str
 
     def get_formatted_address(self):
         """
         This method is responsible for getting the
-        formatted address from the googlemaps module.
+        formatted address from the googlemaps API.
         This method returns a 'str' value.
         """
         try:
@@ -45,19 +44,6 @@ class Institution():
         except NoResponseError:
             return 'not understood so not found'
 
-    # def get_geocode_response_0(self):
-    #     """
-    #     This method is responsible for getting the
-    #     geocode response from the googlemaps module.
-    #     This method returns a 'list' value, or raise an exception.
-    #     """
-    #     gmaps = googlemaps.Client(key=Config.GOOGLE_MAPS_API_KEY)
-    #     geocode_result = gmaps.geocode(self.entered_name)
-    #     try:
-    #         return geocode_result # returns a list with one or more elements
-    #     except googlemaps.exceptions.HTTPError:
-    #         raise NoResponseError
-
     def get_geocode_response(self):
         """
         This method is responsible for getting the
@@ -69,6 +55,7 @@ class Institution():
             "https://maps.googleapis.com/maps/api/geocode/json?"\
                 + "address=" + self.entered_name\
                 + "&key=" + Config.GOOGLE_MAPS_API_KEY
+                + "&language=fr"
         )
         geocode_response_dict = geocode_response_http.json() # type is dict
         # analyze and treat the HTTP response
@@ -134,6 +121,7 @@ class Institution():
             "https://maps.googleapis.com/maps/api/place/details/json?"\
                 + "placeid=" + self.get_place_id()\
                 + "&fields=name&key=" + Config.GOOGLE_MAPS_API_KEY
+                + "&language=fr"
         )
         place_response_dict = place_response_http.json() # type is dict
         # analyze and treat the HTTP response
@@ -176,7 +164,7 @@ class Institution():
         # some sections are exceptions to be ignored
         exceptions = [
             "(.*)<div class=\"geobox\"(.*)", 
-            "(.*)<div class=\"infobox\"(.*)"
+            "(.*)<div class=\"infobox(.*)"
         ]
         # loop on the sections
         n = 1
@@ -215,6 +203,8 @@ class Institution():
         except KeyError:
             return "Enfin, j'en connaissais un rayon... j'ai un peu oublié !"
 
+
+# sub function used in the method get_wiki_summary()
 def ignore_codes_and_hooks(string):
     """
     This function returns the given string, without:
@@ -235,7 +225,7 @@ def ignore_codes_and_hooks(string):
         result += sub
     return result
 
-
+# sub function used in the method get_wiki_summary()
 def ignore_http_tags(string):
     """
     This function returns the given string, without the http tags.
@@ -249,7 +239,7 @@ def ignore_http_tags(string):
         result += sub
     return result
 
-
+# sub function used in the method get_wiki_summary()
 def shorten_text(string):
     """
     This function returns the given string, shortened to max 1000 characters.

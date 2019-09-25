@@ -5,9 +5,7 @@
 
 import re
 
-import googlemaps
 
-# from oc_p07_grandpy.classes.bot_reply import BotReply
 from classes.institution import Institution, NoResponseError
 import data.stop_words as stop_words
 
@@ -16,7 +14,7 @@ class UserQuestion():
     """This class is used to get and treat the question asked by the user."""
     
     def __init__(self, entered_question):
-        """This special method is the class constructor."""
+        """Build a user question, based on the 'entered_question'."""
         super(UserQuestion, self).__init__()
         self.entered_question = entered_question # type is str
 
