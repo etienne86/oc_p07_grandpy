@@ -1,13 +1,8 @@
 #! /usr/bin/env python3
 # coding: utf8
 
-import time
-import uuid
-
-from flask import render_template, request, jsonify, url_for
-# from flask import flash, redirect
+from flask import render_template, request, jsonify
 from app import app
-from classes.app_map import AppMap
 from classes.bot_reply import BotReply
 from classes.institution import Institution
 from classes.user_question import UserQuestion
@@ -51,31 +46,3 @@ def post_javascript_data():
             "zoom": app_map.zoom
         }
     return jsonify(bot_rep)
-    
-   
-def create_tmp_file(text):
-    unique_id = str(uuid.uuid1())
-    with open('app/tmp/' + unique_id + '.txt', 'w') as file:
-        file.write(text)
-    return unique_id
-
-def get_file_content(unique_id):
-    with open('app/tmp/' + unique_id + '.txt', 'r') as file:
-        return file.read()
-
-
-# def listen_data():
-#     """
-#     This function is the function executed in background,
-#     waiting for data entererd by the user.
-#     """
-#     found = False
-#     while not found:
-#         try:
-#             entered_question = get_file_content("")
-#         except FileNotFoundError:
-#             time.sleep(0.5)
-#         else:
-#             found = True
-#     user_quest = UserQuestion(entered_question)
-#     return user_quest
