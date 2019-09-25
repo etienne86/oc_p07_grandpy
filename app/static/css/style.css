@@ -9,25 +9,36 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'open_sansregular';
+    src: url('../fonts/opensans-regular-webfont.ttf');
+    src: url('../fonts/opensans-regular-webfont.woff2') format('woff2'),
+         url('../fonts/opensans-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body
+{
+    font-family: 'open_sansregular', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+header, footer
+{
+    font-family: 'anonymousregular', Arial, sans-serif;
+    background-color: #D4E9FF;
+}
+
+#container
 {
     display: flex;
     flex-direction: column;
-    text-align: center;
-    font-family: 'anonymousregular', Arial, sans-serif;;
-    font-size: 0.7em;
-    height: auto;
-}
-
-header
-{
-    background-color: #D4E9FF;
-}
-
-footer
-{
-    background-color: #D4E9FF;
-    justify-content: flex-end;
+    flex: 1;
 }
 
 #dialogue
@@ -35,7 +46,13 @@ footer
     display: flex;
     flex-direction: column;
     align-self: center;
-    width: 600px;
+    width: 800px;
+}
+
+#form
+{
+    top: 0px;
+    justify-content: flex-start;
 }
 
 .user_question, .bot_reply
@@ -63,20 +80,20 @@ footer
 {
     padding: 3px;
     border-radius: 5px;
-    height: 100px;
+    height: 200px;
     margin: 3px;
     width: auto;
 }
 
-/* media queries */
-@media all and (max-width: 1024px)
+a
 {
-    #dialogue
-    {
-        width: auto;
-    }
+    color: blue;
+}
 
-    #user_input
+/* media queries */
+@media all and (max-width: 800px)
+{
+    #dialogue, #user_input
     {
         width: auto;
     }
