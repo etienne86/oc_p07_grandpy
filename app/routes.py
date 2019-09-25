@@ -6,17 +6,16 @@ from app import app
 from classes.bot_reply import BotReply
 from classes.institution import Institution
 from classes.user_question import UserQuestion
-from various.config import Config
 
 
-@app.route('/', methods=['GET'])
-@app.route('/index/', methods=['GET'])
+@app.route('/')
+@app.route('/index/')
 def index():
     bot = BotReply()
     return render_template('index.html',
                            title='Chez GrandPy',
                            bot=bot,
-                           googlemaps_api_key=Config.GOOGLE_MAPS_API_KEY)
+                           googlemaps_api_key=GOOGLE_MAPS_API_KEY)
 
 
 @app.route('/postmethod', methods = ['POST'])
