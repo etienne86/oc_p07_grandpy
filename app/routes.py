@@ -8,8 +8,8 @@ from classes.institution import Institution
 from classes.user_question import UserQuestion
 
 
-@app.route('/')
-@app.route('/index/')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index/', methods=['GET', 'POST'])
 def index():
     bot = BotReply()
     return render_template('index.html',
