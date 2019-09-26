@@ -7,8 +7,6 @@ import re
 
 import requests
 
-from various.config import Config
-
 
 class NoResponseError(Exception):
     pass
@@ -54,7 +52,7 @@ class Institution():
         geocode_response_http = requests.get(
             "https://maps.googleapis.com/maps/api/geocode/json?"\
                 + "address=" + self.entered_name\
-                + "&key=" + Config.GOOGLE_MAPS_API_KEY
+                + "&key=" + GOOGLE_MAPS_API_KEY
                 + "&language=fr"
         )
         geocode_response_dict = geocode_response_http.json() # type is dict
@@ -120,7 +118,7 @@ class Institution():
         place_response_http = requests.get(
             "https://maps.googleapis.com/maps/api/place/details/json?"\
                 + "placeid=" + self.get_place_id()\
-                + "&fields=name&key=" + Config.GOOGLE_MAPS_API_KEY
+                + "&fields=name&key=" + GOOGLE_MAPS_API_KEY
                 + "&language=fr"
         )
         place_response_dict = place_response_http.json() # type is dict
