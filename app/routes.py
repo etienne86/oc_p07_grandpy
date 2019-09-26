@@ -1,12 +1,16 @@
 #! /usr/bin/env python3
 # coding: utf8
 
+import os
+
 from flask import render_template, request, jsonify
 from app import app
 from classes.bot_reply import BotReply
 from classes.institution import Institution
 from classes.user_question import UserQuestion
 
+
+GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index/', methods=['GET', 'POST'])

@@ -3,9 +3,13 @@
 
 """This module mainly contains the 'Institution' class."""
 
+import os
 import re
 
 import requests
+
+
+GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
 
 
 class NoResponseError(Exception):
@@ -13,7 +17,6 @@ class NoResponseError(Exception):
 
 class NotFoundError(Exception):
     pass
-
 
 class Institution():
     """
