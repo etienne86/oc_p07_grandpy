@@ -9,7 +9,7 @@ from app import app
 from classes.bot_reply import BotReply
 from classes.institution import Institution
 from classes.user_question import UserQuestion
-from ..config import Config
+from config import Config
 
 
 @app.route('/', methods=['GET', 'POST'])
