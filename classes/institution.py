@@ -3,13 +3,11 @@
 
 """This module mainly contains the 'Institution' class."""
 
-import os
 import re
 
 import requests
 
-
-GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
+from ..config import Config
 
 
 class NoResponseError(Exception):
@@ -55,7 +53,7 @@ class Institution():
         geocode_response_http = requests.get(
             "https://maps.googleapis.com/maps/api/geocode/json?"\
                 + "address=" + self.entered_name\
-                + "&key=" + GOOGLE_MAPS_API_KEY
+                + "&key=" + Config.GOOGLE_MAPS_API_KEY
                 + "&language=fr"
         )
         geocode_response_dict = geocode_response_http.json() # type is dict
@@ -121,7 +119,7 @@ class Institution():
         place_response_http = requests.get(
             "https://maps.googleapis.com/maps/api/place/details/json?"\
                 + "placeid=" + self.get_place_id()\
-                + "&fields=name&key=" + GOOGLE_MAPS_API_KEY
+                + "&fields=name&key=" + Config.GOOGLE_MAPS_API_KEY
                 + "&language=fr"
         )
         place_response_dict = place_response_http.json() # type is dict

@@ -3,14 +3,14 @@
 
 import os
 
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, url_for
+
 from app import app
 from classes.bot_reply import BotReply
 from classes.institution import Institution
 from classes.user_question import UserQuestion
+from ..config import Config
 
-
-GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index/', methods=['GET', 'POST'])
@@ -19,7 +19,7 @@ def index():
     return render_template('index.html',
                            title='Chez GrandPy',
                            bot=bot,
-                           googlemaps_api_key=GOOGLE_MAPS_API_KEY)
+                           googlemaps_api_key=Config.GOOGLE_MAPS_API_KEY)
 
 
 @app.route('/postmethod', methods = ['POST'])
