@@ -4,7 +4,7 @@
 
 var divElt = document.createElement("div");
 divElt.setAttribute("class", "bot_reply");
-var welcome = document.getElementById("js_02").getAttribute("wlcmMsg");
+var welcome = document.getElementById("js_01").getAttribute("wlcmMsg");
 divElt.textContent = welcome;
 document.getElementById("dialogue").appendChild(divElt);
 

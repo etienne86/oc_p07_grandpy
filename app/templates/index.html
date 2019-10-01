@@ -47,11 +47,9 @@
 
          <script src="https://code.jquery.com/jquery-1.12.3.js"   integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="   crossorigin="anonymous"></script>
 
-        <script id="js_03" async defer></script>
+        <script id="js_01" type="text/javascript" src="../static/js/grandpy.js" wlcmMsg="{{ bot.welcome_message() }}"></script>
 
-        <script id="js_01" type="text/javascript" src="../static/js/google.js"></script>
-
-        <script id="js_02" type="text/javascript" src="../static/js/grandpy.js" wlcmMsg="{{ bot.welcome_message() }}"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ googlemaps_api_key }}&language=fr"></script>
 
     </body>
 
