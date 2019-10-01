@@ -76,7 +76,8 @@ class UserQuestion():
         key_words = [
             "adresse", "aimerai aller", "aimerais aller", "cherche",
             "comment all", "comment va", "localis", " me rendre ", "ou ",
-            "où ", "veux aller", "voudrai aller", "voudrais aller"
+            "où ", " se rendre ", "veux aller", "voudrai aller",
+            "voudrais aller"
         ]
         result = False
         while key_words and not result:
