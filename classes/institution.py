@@ -210,8 +210,8 @@ def ignore_codes_and_hooks(string):
     - some codes (from encoding)
     - the hooks
     """
-    # ignore codes
-    codes = {"&#160;": ""}
+    # adapt codes
+    codes = {"&#160;": "", "&#91;": "[", "&#93;": "]"}
     for key in codes:
         intermediate_result = string.replace(key, codes[key])
     # ignore hooks
