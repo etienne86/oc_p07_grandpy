@@ -251,7 +251,7 @@ def ignore_sounds(string):
     """
     result = ""
     # regular expression for a sound
-    regex = r"<sup class=\"prononciation noprint\">.*</sup>"
+    regex = r"<sup class=\"prononciation noprint\">.*couter.*</sup>"
     # keep only what is not http tags
     result_list = re.split(regex, string)
     # concatenate all elements
