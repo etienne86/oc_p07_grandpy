@@ -120,7 +120,7 @@ def test_ignore_http_tags():
     assert ignore_http_tags(string) == simple_string
 
 def test_ignore_sounds():
-    string = 'Un <sup class="prononciation noprint"><a>Ecouter</a></sup> test'
+    string = 'Un Écouter test'
     simple_string = "Un  test"
     assert ignore_sounds(string) == simple_string
 

@@ -177,8 +177,8 @@ class Institution():
                 temp_string = splitted_text[n].split("<p>")[1] # after '<p>'
                 temp_string = temp_string.split("</p>")[0] # before '</p>'
                 # clean the text
-                temp_string = ignore_sounds(temp_string)
                 temp_string = ignore_http_tags(temp_string)
+                temp_string = ignore_sounds(temp_string)
                 # decode the text
                 temp_string = ignore_codes_and_hooks(temp_string)
                 # shorten the text, if necessary
@@ -250,10 +250,10 @@ def ignore_sounds(string):
     This function returns the given string, without the sounds.
     """
     result = ""
-    # regular expression for a sound
-    regex = r"<sup class=\"prononciation noprint\">.*couter.*</sup>"
+    # word to be ignored
+    word = "Écouter"
     # keep only what is not http tags
-    result_list = re.split(regex, string)
+    result_list = re.split(word, string)
     # concatenate all elements
     for sub in result_list:
         result += sub
