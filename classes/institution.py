@@ -176,10 +176,10 @@ class Institution():
                 # get the content between the firsts <p> and </p>
                 temp_string = splitted_text[n].split("<p>")[1] # after '<p>'
                 temp_string = temp_string.split("</p>")[0] # before '</p>'
-                # clean the text
-                temp_string = ignore_http_tags(temp_string)
                 # decode the text
                 temp_string = ignore_codes_and_hooks(temp_string)
+                # clean the text
+                temp_string = ignore_http_tags(temp_string)
                 # shorten the text, if necessary
                 result = shorten_text(temp_string)
                 # indicate that the method will return a 'str' value
