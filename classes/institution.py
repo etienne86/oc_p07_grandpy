@@ -177,6 +177,7 @@ class Institution():
                 temp_string = splitted_text[n].split("<p>")[1] # after '<p>'
                 temp_string = temp_string.split("</p>")[0] # before '</p>'
                 # clean the text
+                temp_string = ignore_sounds(temp_string)
                 temp_string = ignore_http_tags(temp_string)
                 # decode the text
                 temp_string = ignore_codes_and_hooks(temp_string)
@@ -236,6 +237,21 @@ def ignore_http_tags(string):
     """
     result = ""
     regex = r"<.*?>" # regular expression for an http tag
+    # keep only what is not http tags
+    result_list = re.split(regex, string)
+    # concatenate all elements
+    for sub in result_list:
+        result += sub
+    return result
+
+# sub function used in the method get_wiki_summary()
+def ignore_sounds(string):
+    """
+    This function returns the given string, without the sounds.
+    """
+    result = ""
+    # regular expression for a sound
+    regex = r"<sup class=\"prononciation noprint\">.*</sup>"
     # keep only what is not http tags
     result_list = re.split(regex, string)
     # concatenate all elements
