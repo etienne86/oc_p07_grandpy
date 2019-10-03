@@ -91,7 +91,9 @@ a
     color: blue;
 }
 
+
 /* media queries */
+
 @media all and (max-width: 800px)
 {
     #dialogue, #user_input
@@ -100,7 +102,7 @@ a
     }
 }
 
-@media all and (orientation: landscape)
+@media all and (max-height: 400px) and (orientation: landscape)
 {
     header, footer
     {
