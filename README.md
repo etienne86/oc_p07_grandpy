@@ -14,4 +14,4 @@ The user is invited to ask a question to GrandPy Bot, in the web browser, for a 
 
 ## How to run the program
 
-Please click on the following [link](https://grandpybot-etienne86.herokuapp.com/)
+Please click on the following [link](https://grandpybot-etienne86.herokuapp.com/).
