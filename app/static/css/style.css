@@ -100,7 +100,7 @@ a
     }
 }
 
-@media all and (max-height: 400px)
+@media handheld and (orientation: landscape)
 {
     header, footer
     {
