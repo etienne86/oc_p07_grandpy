@@ -8,7 +8,7 @@ from unittest.mock import Mock
 import pytest
 
 from classes.institution import Institution
-from classes.institution import ignore_codes_and_hooks, ignore_sounds
+from classes.institution import ignore_codes_and_hooks
 from classes.institution import ignore_http_tags, shorten_text
 
 

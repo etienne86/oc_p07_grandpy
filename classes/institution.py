@@ -178,7 +178,6 @@ class Institution():
                 temp_string = temp_string.split("</p>")[0] # before '</p>'
                 # clean the text
                 temp_string = ignore_http_tags(temp_string)
-                temp_string = ignore_sounds(temp_string)
                 # decode the text
                 temp_string = ignore_codes_and_hooks(temp_string)
                 # shorten the text, if necessary
