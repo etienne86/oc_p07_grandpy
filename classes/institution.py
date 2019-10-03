@@ -209,7 +209,7 @@ def ignore_codes_and_hooks(string):
     """
     This function returns the given string, without:
     - some codes (from encoding)
-    - the hooks
+    - the hooks given for references in wikipedia
     """
     intermediate_result = string
     # adapt codes
@@ -220,16 +220,15 @@ def ignore_codes_and_hooks(string):
     }
     for key in codes:
         intermediate_result = intermediate_result.replace(key, codes[key])
-    # # ignore hooks
-    # result = ""
-    # regex = r"\[.*?\]" # regular expression for text inside hooks
-    # # keep only what is not inside hooks
-    # result_list = re.split(regex, intermediate_result)
-    # # concatenate all elements
-    # for sub in result_list:
-    #     result += sub
-    # return result
-    return intermediate_result
+    # ignore the hooks given for references in wikipedia
+    result = ""
+    regex = r"<sup .*?</sup>" # regular expression for text inside 'sup' hooks
+    # keep only what is not inside hooks
+    result_list = re.split(regex, intermediate_result)
+    # concatenate all elements
+    for sub in result_list:
+        result += sub
+    return result
 
 # sub function used in the method get_wiki_summary()
 def ignore_http_tags(string):
@@ -240,21 +239,6 @@ def ignore_http_tags(string):
     regex = r"<.*?>" # regular expression for an http tag
     # keep only what is not http tags
     result_list = re.split(regex, string)
-    # concatenate all elements
-    for sub in result_list:
-        result += sub
-    return result
-
-# sub function used in the method get_wiki_summary()
-def ignore_sounds(string):
-    """
-    This function returns the given string, without the sounds.
-    """
-    result = ""
-    # word to be ignored
-    word = "Écouter"
-    # keep only what is not http tags
-    result_list = re.split(word, string)
     # concatenate all elements
     for sub in result_list:
         result += sub

@@ -119,11 +119,6 @@ def test_ignore_http_tags():
     simple_string = "Hello! We are glad to see you!"
     assert ignore_http_tags(string) == simple_string
 
-def test_ignore_sounds():
-    string = 'Un Écouter test'
-    simple_string = "Un  test"
-    assert ignore_sounds(string) == simple_string
-
 def test_shorten_text_with_short_string():
     """The string is short enough, so this stays as it is."""
     string = "12345678. " * 50 + "123"
