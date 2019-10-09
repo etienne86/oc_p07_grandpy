@@ -99,18 +99,8 @@ def test_get_wiki_text(monkeypatch):
 # as it uses methods and functions already tested
 
 
-def test_ignore_codes_and_hooks_with_only_codes():
+def test_ignore_codes_and_hooks():
     string = "100&#160;km, this is huge!"
-    simple_string = "100km, this is huge!"
-    assert ignore_codes_and_hooks(string) == simple_string
-
-def test_ignore_codes_and_hooks_with_only_hooks():
-    string = "100km[1], this is huge[2]!"
-    simple_string = "100km, this is huge!"
-    assert ignore_codes_and_hooks(string) == simple_string
-
-def test_ignore_codes_and_hooks_with_both():
-    string = "100&#160;km[1], this is huge[2]!"
     simple_string = "100km, this is huge!"
     assert ignore_codes_and_hooks(string) == simple_string
 
