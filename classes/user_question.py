@@ -74,10 +74,10 @@ class UserQuestion():
         This returns 'True' if yes, 'False' if not.
         """
         key_words = [
-            "adresse", "aimerai aller", "aimerais aller", "cherche",
+            "adresse", "aimerai all", "aimerais all", "cherche",
             "comment all", "comment va", "localis", " me rendre ", "ou ",
-            "où ", " se rendre ", "veux aller", "voudrai aller",
-            "voudrais aller"
+            "où ", " se rendre ", "souhaite all", "souhaiterai all",
+            "souhaiterais all", "veux aller", "voudrai aller", "voudrais aller"
         ]
         result = False
         while key_words and not result:
