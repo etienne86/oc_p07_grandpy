@@ -11,7 +11,7 @@ from classes.institution import Institution
 from classes.user_question import UserQuestion
 
 
-# initialization of three functions which mock three googlemaps returns:
+# initialization of three functions which mock three 'Geocoding API' returns:
 # - a dict with 0 result
 mock_func_0 = Mock()
 mock_func_0.return_value = {"results": [], "status": "ZERO_RESULTS"}

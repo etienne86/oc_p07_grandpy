@@ -12,7 +12,7 @@ from classes.institution import ignore_codes_and_hooks
 from classes.institution import ignore_http_tags, shorten_text
 
 
-# initialization of three functions which mocks:
+# initialization of three functions which mock:
 # - two googlemaps returns:
 #   _ 'geocode' return for address, latitude, longitude and place_id
 #   _ 'place' return for real name
