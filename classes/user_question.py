@@ -76,7 +76,7 @@ class UserQuestion():
         key_words = [
             "adresse", "aimerai all", "aimerais all", "cherche",
             "comment all", "comment va", "localis", " me rendre ", "ou ",
-            "où ", "parler", " se rendre ", "souhaite all", "souhaiterai all",
+            "où ", "parle", " se rendre ", "souhaite all", "souhaiterai all",
             "souhaiterais all", "veux aller", "voudrai aller", "voudrais aller"
         ]
         result = False
